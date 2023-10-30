@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste javascript</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de Clientes</h2>
+        <ul class="list-group" id="listaClientes">
+            <!-- Os itens da lista serão adicionados aqui pelo script -->
+        </ul>
+
+        <h2>Número de Telefone Formatado</h2>
+        <ul class="list-group" id="listaTelefone">
+            <!-- Os itens da lista serão adicionados aqui pelo script -->
+        </ul>    
+    </div>
+</body>
+</html>
+
+<script>
+
+var listaClientes = document.getElementById('listaClientes');
+
+var clientes = [
+    {
+        'id': 1,
+        'nome': 'Luis Santos Silveira',
+        'idade': 18
+    },
+    {
+        'id': 2,
+        'nome': 'Ricardo Lopes Alves',
+        'idade': 30
+    },
+    {
+        'id': 3,
+        'nome': 'Gustavo Silva Junior',
+        'idade': 26
+    }
+];
+
+
+clientes.forEach(cliente => {
+  let partesDoNome = cliente.nome.split(' ');
+  let primeiroNome = partesDoNome[0];
+  let ultimoSobrenome = partesDoNome[partesDoNome.length - 1];
+  //let ultimoSobrenome = partesDoNome[2];
+  console.log(`${ultimoSobrenome}, ${primeiroNome}`);
+
+  var listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.textContent = `${ultimoSobrenome}, ${primeiroNome}`;
+            listaClientes.appendChild(listItem);
+
+});
+
+           
+
+var numero = "5(1)9-876-543-21";
+
+let formatado = numero.replace(/[^0-9]/g, '')  // Remove caracteres não numéricos
+                     .replace(/(\d{2})(\d)(\d{4})(\d{4})/, "($1) $2 $3-$4");
+console.log(formatado);
+
+var listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.textContent = `${formatado}`;
+            listaTelefone.appendChild(listItem);
+
+
+
+
+// Está retornando C e D no console.log
+async function a(){
+    b();
+    await c();
+    await d();
+    alertUser("a") // não é um "erro", mas não tem ;
+}
+
+
+a();
+
+function b(){
+    return; // está retornando antes de chamar o alertuser('b');
+    alertUser('b');
+}
+
+function c(){
+    return new Promise ((resolve) => {
+        resolve();
+        alertUser('c');
+    });
+}
+
+function d(){
+    return new Promise ((resolve) =>{
+        alertUser('d'); // d() nunca é resolvido, portando o alertuser("a") nunca é chamado.
+    });
+}  
+
+
+function alertUser(message){
+    console.log('A função é: '+message);
+}
+
+
+</script>

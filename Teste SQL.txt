@@ -1,0 +1,59 @@
+// Tabela Aluno
+CREATE TABLE Aluno (
+    ID INT PRIMARY KEY,
+    Nome VARCHAR(255)
+);
+
+// Tabela Responsável
+CREATE TABLE Responsável (
+    ID INT PRIMARY KEY,
+    Nome VARCHAR(255)
+);
+
+// Tabela Parentesco
+CREATE TABLE Parentesco (
+    IDResponsável INT,
+    IDAluno INT,
+    Parentesco VARCHAR(255),
+    FOREIGN KEY (IDResponsável) REFERENCES Responsável(ID),
+    FOREIGN KEY (IDAluno) REFERENCES Aluno(ID)
+);
+
+
+
+
+// Cadastro Lucas na Tabela Aluno
+INSERT INTO Aluno (ID, Nome) VALUES (1, 'Lucas');
+
+// Cadastro paulo e Brenda na tabela Responsável
+INSERT INTO Responsável (ID, Nome) VALUES (1, 'Pablo');
+INSERT INTO Responsável (ID, Nome) VALUES (2, 'Brenda');
+
+
+// Vinculando o ID do Paulo e Brenda ao ID do Lucas.
+INSERT INTO Parentesco (IDResponsável, IDAluno, Parentesco) VALUES (1, 1, 'Pai');
+INSERT INTO Parentesco (IDResponsável, IDAluno, Parentesco) VALUES (2, 1, 'Mãe');
+
+
+
+
+SELECT 
+    a.Nome as Nome_Aluno,
+    r1.Nome as Responsável_1,
+    p1.Parentesco as Parentesco_1,
+    r2.Nome as Responsável_2,   
+    p2.Parentesco as Parentesco_2
+FROM Aluno a, Responsável r1, Responsável r2, Parentesco p1, Parentesco p2
+WHERE a.ID = p1.IDAluno
+AND a.ID = p2.IDAluno
+AND r1.ID = p1.IDResponsável
+AND r2.ID = p2.IDResponsável
+AND p1.IDResponsável < p2.IDResponsável;
+
+
+Questão Bonus:
+
+SELECT a.Nome as Nome_Aluno, r.Nome as Nome_Responsável, p.Parentesco
+FROM Aluno a, Responsável r, Parentesco p
+WHERE a.ID = p.IDAluno
+AND r.ID = p.IDResponsável;
